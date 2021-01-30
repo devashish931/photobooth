@@ -1,0 +1,239 @@
+<section class="editor">
+    <img id='watermark' src='assets/logos/logo1.png' hidden>
+    <section class="toolbar">
+        <div class="tool-tray">
+            <ul>
+                <!-- crop -->
+                <li id='crop' class="tool" (click)='selectTool($event)'>
+                    <mat-icon>crop</mat-icon>
+                    <span>Crop</span>
+                </li>
+                <!-- Resize -->
+                <li id='resize' class="tool" (click)='selectTool($event)'>
+                    <i class="fa fa-expand"></i>
+                    <span>Resize</span>
+                </li>
+                <!-- rotate -->
+                <li id='rotate' class="tool" (click)='selectTool($event)'>
+                    <mat-icon>rotate_90_degrees_ccw</mat-icon>
+                    <span>Rotate</span>
+                </li>
+                <!-- tune -->
+                <li id='tune' class="tool" (click)='selectTool($event)'>
+                    <mat-icon>tune</mat-icon>
+                    <span>Tune</span>
+                </li>
+                <!-- filter -->
+                <li id='filter' class="tool" (click)='selectTool($event)'>
+                    <mat-icon>photo_filter</mat-icon>
+                    <span>Filters</span>
+                </li>
+                <!-- text -->
+                <li id='text' class="tool" (click)='selectTool($event)'>
+                    <mat-icon>title</mat-icon>
+                    <span>Text</span>
+                </li>
+                <!-- collage -->
+                <li id='collage' class="tool" (click)='selectTool($event)'>
+                    <mat-icon>view_compact</mat-icon>
+                    <span>Collage</span>
+                </li>
+                <!-- frames -->
+                <li id='frame' class="tool" (click)='selectTool($event)'>
+                    <mat-icon>filter_frames</mat-icon>
+                    <span>Frames</span>
+                </li>
+                   <!-- Details -->
+                   <!-- <li id='details' class="tool" (click)='selectTool($event)'>
+                    <mat-icon>details</mat-icon>
+                    <span>details</span>
+                </li> -->
+            </ul>
+        </div>
+    </section>
+    <div class="edit-area" id='edit-area' (click)='hideToolOptions()' (swipe)='hideToolOptions()'>
+        <mat-icon (click)='imageOptions()' *ngIf='!isImageLoaded' matTooltip='Add Image'>add_circle_outline</mat-icon>
+        <div class="canvas-wrap" style="margin-left: auto;width:auto;height:auto;overflow: hidden;padding: 0;">
+        <img class="editCanvas" id="editCanvas">
+    </div>
+    <div class="manipulation-wrap" style="position:absolute;text-align: center;">
+            <span *ngIf='selectedTool == "text"' cdkDragBoundary='.manipulation-wrap' contentEditable='true' cdkDrag class='textArea' (contextmenu)='enterText($event)'>Right click here to write</span>
+            <div class="cropper " mwlResizable 
+            mwlResizable
+        [validateResize]="validate"
+        [enableGhostResize]="true"
+        [resizeEdges]="{bottom: true, right: true, top: true, left: true}"
+        (resizeEnd)="resizeCropper($event)" id='cropper' cdkDragBoundary='.manipulation-wrap' cdkDrag *ngIf='selectedTool == "crop"'>
+                <span class="dotted-line-v" style="background: transparent;"></span>
+                <span class="dotted-line-h" style="background: transparent;"></span>
+                <span draggable="true" class="resize-handle-top" mwlresizehandle ></span>
+                <span draggable="true" class="resize-handle-bottom"  mwlresizehandle></span>
+                <span draggable="true" class="resize-handle-right"  mwlresizehandle></span>
+                <span draggable="true" class="resize-handle-left"  mwlresizehandle></span>
+                <span draggable="true" class="corner-nw"  ></span>
+                <span draggable="true" class="corner-ne"  ></span>
+                <span draggable="true" class="corner-sw"  ></span>
+                <span draggable="true" class="corner-se"  ></span>
+                <span style="background: transparent;color:rgba(255,255,255,.7);width:14px;height:14px;left:calc(50% - 7px);top:calc(50% - 7px);"><mat-icon style="font-size:14px;">add</mat-icon></span>
+            </div>
+    </div>
+    </div>
+
+    <div class="tool-options" [ngSwitch]='selectedTool' [ngClass]='{"tool-options-visibility" : toolOptionsVisibility}'>
+        <div class="options" *ngSwitchCase="'crop'">
+            crop
+        </div>
+        <div class="options" *ngSwitchCase="'rotate'">
+                <label for="rotate">Rotate</label>
+                <mat-slider class="sliderInput rotate-controller" #rotationHandler thumbLabel='true'
+                    (change)='rotateCanvas(rotationHandler.value)' min='-180' max='180' value='0'></mat-slider>
+                    
+                    <button (click)='applyRotation(rotationHandler.value)'>Apply</button>
+        </div>
+        <div class="options" *ngSwitchCase="'tune'">
+            <form >
+            <label for="brightness">Brightness</label>
+            <mat-slider class="sliderInput brightness-controller" #brightness thumbLabel='true'
+                (change)='tune("brightness",brightness.value)' min='-80' max='80' value='0'></mat-slider>
+                <label for="contrast">Contrast</label>
+                <mat-slider class="sliderInput contrast-controller" #contrast thumbLabel='true'
+                    (change)='tune("contrast",contrast.value)' min='-100' max='100' value='0'></mat-slider>    
+            <label for="saturation">Saturation</label>
+            <mat-slider class="sliderInput saturation-controller" #saturation thumbLabel='true'
+                (change)='tune("saturation",saturation.value)' min='-100' max='100' value='0'></mat-slider>
+            <label for="hue">Hue</label>
+            <mat-slider class="sliderInput hue-controller" #hue thumbLabel='true' (change)='tune("hue",hue.value)' min='-100'
+                max='100' value='0'></mat-slider>
+            <label for="vibrance">vibrance</label>
+            <mat-slider class="sliderInput vibrance-controller" #vibrance thumbLabel='true'
+                (change)='tune("vibrance",vibrance.value)' min='-100' max='100' value='0'></mat-slider>
+                </form>
+        </div>
+        <div class="options filter-box" *ngSwitchCase="'filter'">
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='vintage'>Vintage</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='lomo'>Lomo</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='clarity'>Clarity</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='sinCity'>sin City</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='sunrise'>Sunrise</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='crossProcess'>Cross Process</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='orangePeel'>Orange Peel</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='love'>Love</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='grungy'>Grungy</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='jarques'>Jarques</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='pinhole'>pinhole</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='oldBoot'>Old Boot</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='glowingSun'>Glowing Sun</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='hazyDays'>Hazy Days</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='herMajesty'>Her Majesty</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='nostalgia'>Nostalgia</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='hemingway'>Hemingway</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='concentrate'>Concentrate</button>
+            <button mat-button class='filterButton' (click)='applyFilter($event)' id='posterize'>Posterize</button>
+        </div>                                                                        
+        <div class="options text-options" *ngSwitchCase="'text'">
+           <p>Color</p>
+           <label for='textColor' class="textColor"></label>
+           <input type="color" id='textColor' hidden #textColor (change)='changeTextColor(fontSize.value)'>
+           <label for='fontSize'>Font Size</label>
+           <mat-slider class="sliderInput" #fontSize thumbLabel='true'
+           (change)='changeTextColor(fontSize.value)' min='5' max='72' value='18'></mat-slider>
+           <label>Text Align</label>
+           <div class="clearfix"></div>
+           <mat-icon matToolTip='left' (click)='align("start")'>format_align_left</mat-icon>
+           <mat-icon matToolTip='center' (click)='align("center")'>format_align_center</mat-icon>
+           <mat-icon matToolTip='right' (click)='align("end")'>format_align_right</mat-icon>
+           
+          <button mat-button (click)="drawText(fontSize.value,textColor.value)">Apply</button>
+        </div>
+        <div class="options" *ngSwitchCase="'collage'">
+            collage
+        </div>
+        <div class="options" *ngSwitchCase="'frame'">
+            frame
+        </div>
+        <div class="options" *ngSwitchCase="'resize'">
+            <div>
+                <form (submit)="resize(width.value,height.value)">
+                <label for="width">Width</label>
+                <input type="number" name='width' #width [value]='manipulate.canvas.width'>
+                <label for="height">Height</label>
+                <input type="number" name='height' #height [value]='manipulate.canvas.height'>
+                <button mat-raised-button type="submit" >Apply</button>
+                </form>
+            </div>
+        </div>
+        <!-- <div class="options" *ngSwitchCase="'details'">
+            <label for="hue">Structure</label>
+            <mat-slider class="sliderInput hue-controller" #structure thumbLabel='true' (change)='manipulate.structure(structure.value)' min='-100'
+                max='100' value='0'></mat-slider>
+            <label for="sharpness">Sharpness</label>
+            <mat-slider class="sliderInput sharpness-controller" #sharpness thumbLabel='true'
+                (change)='manipulate.sharpness(sharpness.value)' min='-100' max='100' value='0'></mat-slider>
+        </div> -->
+        <div class="options" *ngSwitchDefault>
+                <div class="notFoundInfo">Select an Image</div>
+            </div>
+    </div>
+
+</section>
+<div class="imageOptions" [ngClass]='{
+    swing : imageOptionsVisibility,
+    animated : imageOptionsVisibility ,
+    imageOptionsVisible : imageOptionsVisibility }'>
+    <ul>
+        <input type="file" accept="image/*" hidden #editingInput (change)='drawImage($event)'>
+        <li (click)='editingInput.click()'>
+            <mat-icon>add_photo_alternate</mat-icon>
+            <p>Gallery</p>
+        </li>
+
+        <li (click)='startCamera()'>
+            <mat-icon>add_a_photo</mat-icon>
+            <p>Take Picture</p>
+        </li>
+
+        <li>
+            <mat-icon>account_circle</mat-icon>
+            <p>Your Account</p>
+        </li>
+
+        <li>
+            <mat-icon>add_to_photos</mat-icon>
+            <p>Public Images</p>
+        </li>
+    </ul>
+</div>
+
+<div class='editOptions' id='editOptions' [ngClass]='{
+    editOptionsVisible : editOptionsVisibility}'>
+    <ul>
+        <li matTooltip='Add Image' (click)='imageOptions()'>
+            <mat-icon>add</mat-icon>
+        </li>
+        <li matTooltip='Undo' (click)='undo()' [ngClass]='{ "disabled" : manipulate.undoStack.length == 1}'>
+            <mat-icon>undo</mat-icon>
+        </li>
+        <li matTooltip='Redo' (click)='redo()' [ngClass]='{ "disabled" : manipulate.redoStack.length == 0}'>
+            <mat-icon>redo</mat-icon>
+        </li>
+        <li matTooltip='Download' (click)='downloadImage()'>
+            <mat-icon>file_download</mat-icon>
+        </li>
+        <li matTooltip='Upload'>
+            <mat-icon>file_upload</mat-icon>
+        </li>
+        <!-- <li matTooltip=''><mat-icon></mat-icon></li> -->
+    </ul>
+    <button mat-mini-fab (click)='editOptionsToggle()' style="position: absolute;bottom: 5px;left: 5px;">
+        <mat-icon *ngIf='!editOptionsVisibility' matTooltip='Menu'>menu</mat-icon>
+        <mat-icon *ngIf='editOptionsVisibility' matTooltip='Close'>close</mat-icon>
+    </button>
+</div>
+
+<button mat-mini-fab class='apply-button' *ngIf='manipulate.toApply' (click)='applyManipulation()'>
+    <mat-icon>check</mat-icon>
+</button>
+
+<section class="camera" *ngIf='cameraVisibility'>
+    <video autoplay id='video' style="width: 100vw;height : 100vh;background: black;"></video>
+</section>

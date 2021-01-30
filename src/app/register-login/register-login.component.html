@@ -1,0 +1,115 @@
+<div class="form-wrap" [ngClass]='{"form-wrap-visible" : uInterface.formVisibility}'>
+
+<!--   ******   registration form   ******   -->
+
+<div class="registration-form" *ngIf='uInterface.registerVisibility'>
+    <form  [formGroup]='registerData' (submit)='registerUser($event)'>
+        <div class="formHeading">
+        <h4>Registration</h4>
+        <mat-icon (click)="uInterface.closeWindow()" id='registerClose'>close</mat-icon>
+        </div>
+        <div class="fields">
+            
+        <div class="field-wrap">
+            <div class="input-wrap">
+                    <label>Name</label>
+                    <input type="text" formControlName='name'>
+                    <div class="error" *ngIf="get('name').touched && get('name').invalid">
+                        <small *ngIf="get('name').errors.required">Name is required</small>
+                    </div>
+            </div>
+        </div>
+
+        <div class="field-wrap">
+            <div class="input-wrap">
+            <label>Mobile no.</label>
+                <input type="number" formControlName='mobileNo'>
+                <div class="error" *ngIf="get('mobileNo').touched && get('mobileNo').invalid">
+                        <small *ngIf="get('mobileNo').errors.minlength || get('mobileNo').errors.maxlength">Enter a valid mobile no.</small>
+                        <small *ngIf="get('mobileNo').errors.required">Mobile no. is required</small>
+                    </div>
+                </div>
+        </div>
+        
+        <div class="field-wrap">
+            <div class="input-wrap">
+            <label>Email Id</label>
+                <input type="email" formControlName='email'>
+                <div class="error" *ngIf="get('email').touched && get('email').invalid">
+                        <small *ngIf="get('email').errors.email">Enter a valid email-id</small>
+                        <small *ngIf="get('email').errors.required">Email Id is required</small>
+                    </div>
+                </div>
+        </div>
+
+        <div class="field-wrap">
+            <div class="input-wrap">
+            <label>New Password</label>
+                <input #password type="password" formControlName='password'>
+                <div class="error" *ngIf="get('password').touched && get('password').invalid">
+                        <small *ngIf="get('password').errors.minlength" >Password is too small</small>
+                        <small *ngIf="get('password').errors.required" > Password is required</small>
+                    </div>
+                </div>
+        </div>
+
+        <div class="field-wrap">
+            <div class="input-wrap">
+            <label>Confirm password</label>
+                <input #conPassword type="password" id="conPassword" formControlName='conPassword'>
+                <div class="error" *ngIf="get('conPassword').touched && get('conPassword').invalid">
+                        <small *ngIf="get('conPassword').errors.required">Please confirm your paasword</small>
+                        <small *ngIf="password.value !== conPassword.value">Password doesn't match</small>
+                    </div>
+                </div>
+        </div>
+    
+    </div>
+    <div style="float:left;padding-left:10px;"><p style="color:#888;opacity: .7;">Already registered? <span style="color:#26d;cursor:pointer;" (click)='uInterface.toggleForms("login")'>Log In</span></p></div>
+    <!-- <button [disabled]=" get('name').invalid || get('mobileNo').invalid || get('email').invalid || get('password').invalid || get('conPassword').invalid" type="submit" mat-raised-button>Submit</button> -->
+    <button type="submit" mat-raised-button>Submit</button>
+    <div class="clearfix"></div>
+    </form>
+    </div>
+    
+    <!--   ******   login form   ******   -->
+    
+    
+    <div class="login-form" *ngIf='uInterface.loginVisibility'>
+            <form  [formGroup]='loginData' (submit)='loginUser($event)'>
+                    <div class="formHeading">
+                    <h4>Log In</h4>
+                    <mat-icon (click)="uInterface.closeWindow()" id='loginClose'>close</mat-icon>
+                    </div>
+                    <div class="fields">
+                    <div class="field-wrap">
+                        <div class="input-wrap">
+                                <label for='email'>Username</label>
+                                <input type="email" id='email' formControlName='username' autocomplete='' autofocus>
+                                <div class="error" *ngIf="getloginData('username').touched && getloginData('username').invalid">
+                                            <small *ngIf="getloginData('username').errors.email">Enter a valid username</small>
+                                            <small *ngIf="getloginData('username').errors.required">username is required</small>
+                                        </div>
+                        </div>
+                    </div>
+                    <div class="field-wrap">
+                            <div class="input-wrap">
+                            <label for='password'>Password</label>
+                            <input type="password" id='password' formControlName='password' autocomplete="">
+                            <mat-icon *ngIf='!passwordHidden' (click)='togglePasswordState()'>visibility</mat-icon>
+                            <mat-icon *ngIf='passwordHidden' (click)='togglePasswordState()'>visibility_off</mat-icon>
+                            <div class="error" *ngIf="getloginData('password').touched && getloginData('password').invalid">
+                                            <small *ngIf="getloginData('password').errors.required">password is required</small>
+                                        </div>
+                            </div>
+                    </div>
+                    </div>
+                    <div style="float:left;padding-left:10px;"><p style="color:#888;opacity: .7;">Don't have an account? <span style="color:#26d;cursor:pointer;" (click)='uInterface.toggleForms("registration")'>Register..</span></p></div>
+                <!-- <button [disabled]=" getloginData('username').invalid || getloginData('password').invalid" (click)='login()' type="button" mat-raised-button>Submit</button> -->
+                <button  type="submit" mat-raised-button>Submit</button>
+                <div class="clearfix"></div>
+                <p style="color:rgb(221, 48, 48);padding:5px 10px 10px 10px;user-select: none;cursor: pointer; font-size: 12px;;" (click)='forgetPassword()'>Forgot Password ??</p>
+                </form>
+                </div>
+
+</div>

@@ -1,0 +1,40 @@
+<header>
+    <nav>
+        <div class="logo-wrap">
+            <div routerLink='' style="width: 100%;margin-top:5px;height:60px;background: rgba(40,40,40,.7);padding: 5px;border-radius: 5px;box-sizing: border-box;">
+                <img *ngIf='uInterface.isMobScreen' src='assets/logos/logo.png' style="width: 100%;height:100%;">
+                <img *ngIf='!uInterface.isMobScreen' src='assets/logos/logo1.png' style="width: 100%;height:100%;">
+            </div>
+        </div>
+
+
+        <button mat-mini-fab *ngIf='uInterface.isMobScreen' class="sideMenuToggle" (click)='uInterface.toggleSideMenu()'>
+                <mat-icon *ngIf='!uInterface.sideMenuVisibility'>menu</mat-icon>
+                <mat-icon *ngIf='uInterface.sideMenuVisibility'>close</mat-icon>
+        </button>
+
+        
+        <div class="themeToggle-wrap">
+            <mat-slide-toggle metTooltip='Toggle Theme' labelPosition='before' [checked]='darkTheme' #themeToggle color='info' (change)='toggleTheme(themeToggle)' >
+                <mat-icon >brightness_4</mat-icon>
+            </mat-slide-toggle>
+        </div> 
+        <div class="signIn-logIn">
+                <button mat-mini-fab  (mouseenter)='showHideMenu()' (mouseleave)='showHideMenu()'>
+                    <mat-icon *ngIf='!uInterface.isLoggedIn'>account_circle</mat-icon>
+                    
+                <img *ngIf='uInterface.isLoggedIn' [src]='profilePic' alt='profilePic'>
+                   
+                </button>
+                 <div class="register-option" [@showHideRegisterMenu]="menuVisibility?'show':'hide'" (mouseenter)='showHideMenu()' (mouseleave)='hideRegisterOptions()'>
+                        <ul>
+                            <li (click)='showForm("registration")' *ngIf='!uInterface.isLoggedIn'>Register</li>
+                            <li (click)='showForm("login")' *ngIf='!uInterface.isLoggedIn'>Log In</li>
+                        </ul>
+                    </div>
+            </div>  
+    </nav>
+    
+</header>
+
+<app-registration></app-registration>

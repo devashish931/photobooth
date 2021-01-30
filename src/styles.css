@@ -1,0 +1,625 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+
+:root{
+    --formTheme : rgb(240,240,240);
+    --themeColor : rgb(17, 141, 199);
+    --themeBlue : rgb(17, 141, 199);
+    --fontColor : #e1e1e1;
+    --bodyColor : #f1f1f1;
+    --themeFont : rgb(17, 141, 199);
+    --formFieldText : #333;
+    --editorFont : #242323;
+    --screenVh : calc(100vh - 71px);
+    --gradientBack : linear-gradient(45deg,rgba(17, 141, 199,.4),rgba(0,0,0,.5));
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    transition: ease-in-out .4s ;
+}
+
+*:visited{
+    outline: none;
+}
+
+li,button,mat-icon,img{
+    user-select: none;
+}
+
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    padding-top: 70px;
+    box-sizing: border-box;
+    background: var(--bodyColor);
+}
+
+
+*::-webkit-scrollbar{
+    width:8px;
+}
+*::-webkit-scrollbar-track{
+    width: 100%;
+}
+*::-webkit-scrollbar-thumb{
+    width: 100%;
+    background: var(--themeBlue);
+}
+
+.lightbox-wrapper{
+    background: var(--formTheme);
+}
+
+button{
+    user-select: none;
+    font-size: 18px !important;
+}
+
+.paginate{
+    height:40px; 
+    display: flex;
+    margin-top: 30px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+}
+
+.paginate>span{
+    width: 100px;
+    float: left;
+    padding: 0 10px;
+    box-sizing: border-box;
+    margin: auto;
+    text-align: center;
+    color : var(--formFieldText);
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.paginate button{
+    background: var(--themeBlue) !important;
+    box-shadow: 1px 1px 8px rgba(30,30,30,.6) !important;
+    color: #e1e1e1 !important;
+}
+
+#prev{
+    float: left;
+    margin-left: calc(50% - 100px);
+}
+#next{
+    float: right;
+    margin-right: calc(50% - 100px);
+}
+
+.form-wrap{
+    width:100%;
+    height:100Vh;
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+    top: -120vh;
+    left:0;
+    background: var(--gradientBack);
+    z-index: 100;
+    transition: ease-in-out .4s;
+}
+
+.form-wrap-visible{
+    top: 0;
+
+}
+
+*:focus{
+    outline: none;
+}
+
+
+.clearfix{
+    clear: both;
+}
+
+input::-webkit-inner-spin-button, 
+input::-webkit-outer-spin-button{
+    appearance: none;
+    margin: 0;
+}
+
+
+.selected{
+    box-shadow: none !important;
+    background: rgb(10, 86, 119) !important;
+}
+
+.notFoundInfo{
+    width: 92%;
+    text-align: center;
+    margin: 100px 4%;
+    font-size: 28px ;
+    border-radius: 7px;
+    color : rgb(122, 120, 120);
+    padding: 25px;
+    box-shadow: 0px 0px 20px 1px rgba(30,30,30,.5);
+    box-sizing: border-box;
+}
+
+
+/* #############################################################################################################
+################################################################################################################
+################################################ form Css ######################################################
+################################################################################################################
+##############################################################################################################*/
+
+.login-form,.registration-form,.category-create-form , .publicImageForm{
+    width:94%;
+    min-height: 285px;
+    border-radius: 7px;
+    float:left;
+    margin-top: 120px;
+    margin-left: 3%;
+    background: var(--formTheme);
+}
+
+
+
+.formHeading{
+    width:100%;
+    height:40px;
+    margin-bottom: 10px;
+    position: relative;
+    
+}
+.formHeading>h4{
+    position: absolute;
+    color : #efefef;
+    left :0;
+    padding: 8px;
+    text-transform: capitalize;
+    border-radius: 7px 0 7px 0;
+    font-weight: 100;
+    top: 0px;
+    background: rgb(17, 141, 199);
+    font-size: 20px;
+}
+
+.formHeading mat-icon{
+    text-align: center;
+    font-size: 20px;
+    position: absolute;
+    color : rgb(17, 141, 199);
+    user-select: none;
+    cursor: pointer;
+    top:7px;
+    right:7px;
+
+}
+
+.login-form .fields,.registration-form .fields, .photoForm > .fields , .category-create-form > .fields , .publicImageForm > .fields{
+    box-sizing: border-box;
+    margin-top: 25px;
+    padding: 0 10px;
+}
+
+.field-wrap{
+    width:100%;
+    height:64px;
+    margin-top: 10px;
+    float: left;
+    box-sizing: border-box;
+}
+
+.field-wrap input:focus{
+    outline: none;
+}
+
+.field-wrap>.input-wrap{
+    width: 100%;
+    height :calc(60%);
+    position: relative;
+}
+.field-wrap label{
+    position: absolute;
+    padding: 6px;
+    border-radius: 3px;
+    color : var(--themeFont);
+    left:10px;
+    font-size: 13px;
+    top:-15px;
+    z-index: 5;
+    background: var(--formTheme);
+}
+.field-wrap input,.field-wrap select{
+    width: 100%;
+    height : 45px;
+    position: absolute;
+    padding: 0 10px;
+    font-size: 14px;
+    background: transparent;
+    box-sizing: border-box;
+    color : var(--formFieldText);
+    border-radius: 3px;
+    font-weight: 100;
+    border: 1px solid var(--themeFont);
+}
+
+.field-wrap select option{
+    background: var(--formTheme);
+}
+
+.login-form button,.registration-form button, .photoForm button , .category-create-form button , .publicImageForm button{
+    float:right;
+    margin-right: 10px;
+    background : rgb(17, 141, 199);
+    color : #efefef;
+    margin-bottom: 15px;
+    margin-top: 5px;
+    
+}
+
+/* .login-form button,.registration-form button:disabled{
+    background-color: rgb(17, 141, 199);
+    color : #efefef;
+    opacity : 0.6;
+} */
+
+.input-wrap > .error{
+    position: absolute;
+    padding:5px;
+    left: 10px;
+    color : #d33;
+    background: var(--formTheme);
+    top:33px;
+    font-size: 12px;
+}
+
+.field-wrap input[type = 'password']{
+
+    padding-right:44px;
+}
+
+.field-wrap> mat-radio-group{
+    width:calc(100%);
+}
+
+.field-wrap mat-radio-button{
+    width:50%;
+    padding:0 15px;
+    box-sizing: border-box;
+    color : var(--themeFont);
+}
+
+.userType input[type = 'radio']{
+    position: static;
+    width:50%;
+    float:left;
+}
+
+
+.field-wrap input:focus{
+    outline: none;
+}
+
+.field-wrap mat-icon{
+    position: absolute;
+    top : 13px;
+    line-height: 24px;
+    text-align: center;
+    font-size: 20px;
+    color : rgb(8, 114, 156);
+    user-select: none;
+    cursor: pointer;
+    right:10px;
+}
+
+/*######################################################################################################################
+########################################################################################################################
+################################################### Expansion panel ####################################################
+########################################################################################################################
+###################################################################################################################### */
+
+.mat-panel-description{
+    border-left: 1px solid var(--themeBlue);
+    padding: 0 5px;
+    height: 40px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 15px;
+    line-height: 40px;
+    color : var(--formFieldText);
+}
+
+mat-expansion-panel-header{
+    padding: 0 10px;
+
+}
+
+.mat-expansion-panel-body{
+    padding: 0 15px 15px;
+}
+
+
+.profileSmall{
+    float: left;
+    height:120px;
+    width:120px;
+    margin:10px;;
+}
+
+.profileSmall>img{
+ width:100%;
+ height:100%;
+ border-radius: 50%;
+}
+
+.fullInfo{
+    float: left;
+    margin: 20px 0 0 0px;
+    font-size: 15px;
+    padding: 5px;
+    box-sizing: border-box;
+    color : var(--formFieldText);
+}
+.fullInfo>p>span{
+    display: inline-block;
+    width:160px;
+}
+
+.actions{
+    float: right;
+}
+
+
+/* #############################################################################################################
+################################################################################################################
+################################################ image gallery #################################################
+################################################################################################################
+##############################################################################################################*/
+
+
+.act{
+    position: fixed;
+    height: 65px;
+    padding: 0 20px 0 10px;
+    background: rgba(29, 124, 187, 0.466);
+    border-bottom-left-radius: 10px; 
+    box-sizing: border-box;
+    z-index: 82;
+    top: 70px;
+    left:0px;
+    width:100%;
+}
+
+.act>div{
+    float: right;
+    height: calc(100%);
+    width: 40px;
+}
+
+.act h3{
+    font-weight: 100;
+    display: inline;
+    font-size: 25px;
+    color : var(--formFieldText);
+    line-height: 65px;
+    text-align: left;
+}
+
+
+.act>div mat-icon{
+    color: var(--themeBlue);
+    text-align: right;
+    font-size: 34px;
+    line-height: 65px;
+    cursor: pointer;
+}
+
+.images{
+    width:100%;
+    padding: 5px ;
+    margin-top: 75px;
+    box-sizing: border-box;
+}
+
+.pubImageWrap{
+    transform: scale(0,0);
+    transition: ease-in .3s;
+}
+
+.images>div{
+    width:calc(50% - 10px); 
+    height:calc(50vw - 10px);
+    margin: 5px;
+    overflow: hidden;
+    border-radius: 5px;
+    float: left;
+    transition: ease-in-out .3s;
+    box-sizing: border-box;
+
+}
+
+.images img{
+    max-width : 100%;
+    min-height: 100%;
+}
+
+.images>div:hover{
+    transform: scale(1.1,1.1);
+    box-shadow: 2px 2px 20px rgba(20,20,20,.7);
+}
+
+
+/* #############################################################################################################
+################################################################################################################
+################################################ detail viewer #################################################
+################################################################################################################
+##############################################################################################################*/
+
+.categoryDetails{
+    position: fixed;
+    border-radius: 10px;
+    width: 96vw ;
+    height: 96vw ;
+    top : calc(50vh - 48vw) ;
+    left : 2vw;
+    z-index: 199;
+    overflow: hidden;
+    transition:ease-in-out .4s ;
+}
+
+.categoryDetails img{
+    position: absolute;
+    max-width: 100%;
+    min-height: 100%;  
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.detailHideButton{
+    position: absolute !important;
+    right: 30px !important;
+    top:30px !important;
+    background: var(--themeBlue) !important;
+    color : #e1e1e1 !important;
+}
+
+
+.category-cover-mask2{
+    width: 100%;
+    position: absolute;
+    height: calc(100%);
+    text-transform: capitalize;
+    background: rgba(0,0,0,.4);
+    color : #e1e1e1;
+    font-size: 20px;
+    display: block;
+    box-sizing: border-box;
+    padding: 40px 15px;
+}
+
+
+
+.category-cover-mask2 p{
+    width: 100%;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+
+.hidden{
+    transform: scale(0,0) !important;
+}
+
+/* #############################################################################################################
+################################################################################################################
+################################################ search field ##################################################
+################################################################################################################
+##############################################################################################################*/
+
+
+.searchField-wrap{
+
+    width: 180px !important;
+    height:calc(100%) !important;
+    left: calc(50% - 90px);
+    top : 0px;
+    position: absolute;
+
+}
+
+.searchField-wrap > .searchField{
+    width: 100%;
+    height: 30px;
+    background: var(--formTheme);
+    border: none;
+    color : var(--formFieldText);
+    position: absolute;
+    top: 20px;
+    font-size: 12px;
+    padding: 0 40px 0 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.searchField-wrap > mat-icon{
+    width: 30px;
+    height: 30px;
+    text-align: center !important;
+    line-height: 30px !important;
+    position: absolute;
+    right : 0;
+    font-size: 26px !important;
+    top : 20px;
+    background: var(--themeBlue);
+    color : #f1f1f1 !important;
+    border-radius: 0 8px 8px 0 ;
+}
+
+/* #############################################################################################################
+################################################################################################################
+################################################## side Menu ###################################################
+################################################################################################################
+##############################################################################################################*/
+
+@media(min-width : 640px){
+
+    .login-form,.registration-form , .category-create-form {
+        width:340px;
+        margin-left: calc(50% - 170px);
+    }
+
+    .images div{
+        width: calc(20% - 10px);
+        height:calc(20vw - 70px);
+
+    }
+
+    .act{
+    left:250px;
+    width: calc(100% - 250px);
+}
+
+.act h3{
+    font-size: 35px;
+}
+
+.paginate{
+    margin-left: -230px;
+}
+
+.categoryDetails{
+    width: 500px ;
+    height: 500px ;
+    top : calc(50vh - 250px) ;
+    left : calc(50vw - 250px);
+}
+
+.searchField-wrap{
+
+    width: 250px !important;
+    left: calc(50% - 125px);
+
+}
+
+.searchField-wrap > .searchField{
+    height: 36px;
+    top: 17px;
+    font-size: 14px;
+    padding: 0 46px 0 10px;
+}
+
+.searchField-wrap > mat-icon{
+    width: 36px;
+    height: 36px;
+    line-height: 36px !important;
+    top : 17px;
+}
+
+}
